@@ -34,6 +34,7 @@ public class GameController {
 	public String addGamePage(Model model) {
 		model.addAttribute("tsscGame", new TsscGame());
 		model.addAttribute("topics", gameS.getTopicS().findAll());
+		model.addAttribute("tsscTopic", null);
 		return "games/add-game";
 	}
 	
@@ -71,6 +72,7 @@ public class GameController {
 			throw new IllegalArgumentException("Invalid game Id:" + id);
 		model.addAttribute("tsscGame", game);
 		model.addAttribute("topics", gameS.getTopicS().findAll());
+//		model.addAttribute("tsscTopic", -1);
 		return "games/update-game";
 	}
 

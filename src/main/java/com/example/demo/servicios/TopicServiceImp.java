@@ -6,46 +6,50 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.dao.TsscTopicDao;
 import com.example.demo.modelo.TsscGame;
 import com.example.demo.modelo.TsscSprint;
 import com.example.demo.modelo.TsscTopic;
-import com.example.demo.repositorios.TopicRepository;
 @Service
 public class TopicServiceImp implements TopicService{
 
-	private TopicRepository topicR;
+	private TsscTopicDao topicR;
 	
 	@Autowired
-	public TopicServiceImp(TopicRepository t) {
+	public TopicServiceImp(TsscTopicDao t) {
 		topicR = t;
 	}
 	
 	@Override
+	@Transactional
 	public TsscTopic createTopic(TsscTopic topic) {
-		if(topic.getDefaultSprints()>0 && topic.getDefaultGroups()>0)
-		return topicR.save(topic);
+		if(topic.getDefaultSprints()>0 && topic.getDefaultGroups()>0) {
+		topicR.save(topic);
+		return topicR.findById(topic.getId());
+		}
 		return null;
 	}
 
 	@Override
+	@Transactional
 	public TsscTopic updateTopic(TsscTopic topic) throws NoSuchElementException{
-		try {
-			TsscTopic aeditar = topicR.findById(topic.getId()).get();
-		if(topic.getDefaultSprints()>0 && topic.getDefaultGroups()>0)
-			return topicR.save(topic);
-			return null;
-		} catch (NoSuchElementException e) {
-			throw e;
+		
+		TsscTopic aeditar = topicR.findById(topic.getId());
+		if(aeditar != null) {
+		if(topic.getDefaultSprints()>0 && topic.getDefaultGroups()>0) {
+			topicR.update(topic);
+			return topicR.findById(topic.getId());
+		} else return null;
 		}
+		throw new NoSuchElementException();
 	}
 
 	@Override
 	public TsscTopic getTopic(Long id) {
-		Optional<TsscTopic> alv = topicR.findById(id);
-		if(!alv.isEmpty())
-			return alv.get();
-		return null;
+		return topicR.findById(id);
+		
 	}
 
 	@Override

@@ -19,14 +19,14 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import com.example.demo.dao.TsscGameDao;
+import com.example.demo.dao.TsscStoryDao;
+import com.example.demo.dao.TsscTopicDao;
 import com.example.demo.modelo.TsscGame;
 import com.example.demo.modelo.TsscGroup;
 import com.example.demo.modelo.TsscSprint;
 import com.example.demo.modelo.TsscStory;
 import com.example.demo.modelo.TsscTopic;
-import com.example.demo.repositorios.GameRepository;
-import com.example.demo.repositorios.StoryRepository;
-import com.example.demo.repositorios.TopicRepository;
 import com.example.demo.servicios.GameServiceImp;
 import com.example.demo.servicios.StoryServiceImp;
 import com.example.demo.servicios.TopicServiceImp;
@@ -37,7 +37,7 @@ class JUnitMockTests {
 	@Nested
 	class Game {
 		@Mock
-		private GameRepository gameR;
+		private TsscGameDao gameR;
 
 		@Mock
 		private TopicServiceImp tS;
@@ -56,7 +56,7 @@ class JUnitMockTests {
 			TsscGame game = new TsscGame();
 			game.setNSprints(2);
 			game.setNGroups(2);
-			when(gameR.save(game)).thenReturn(game);
+			when(gameR.findById(game.getId())).thenReturn(game);
 			assertEquals(gameS.createGame(game), game);
 		}
 
@@ -76,7 +76,7 @@ class JUnitMockTests {
 			game.setNSprints(10);
 			game.setNGroups(10);
 			TsscTopic t = new TsscTopic();
-			when(gameR.save(game)).thenReturn(game);
+			when(gameR.findById(game.getId())).thenReturn(game);
 			when(tS.getTopic(t.getId())).thenReturn(t);
 			assertEquals(gameS.createGameWithTopic(game, t.getId()), game);
 		}
@@ -104,8 +104,7 @@ class JUnitMockTests {
 			primera.setDescription("Simulación iniciada");
 			t.addTsscStory(primera);
 			when(tS.getTopic(t.getId())).thenReturn(t);
-			when(gameR.save(game)).thenReturn(game);
-			when(gameR.findById(game.getId())).thenReturn(Optional.of(game));
+			when(gameR.findById(game.getId())).thenReturn(game);
 			List<TsscStory> storiesGame = gameS.getGame(game.getId()).getTsscStories();
 			assertAll(
 				()->	assertEquals(gameS.createGameWithTopic2(game, t.getId()), game),
@@ -129,7 +128,7 @@ class JUnitMockTests {
 			primera.setDescription("Simulación iniciada");
 			t.addTsscStory(primera);
 			when(tS.getTopic(t.getId())).thenReturn(t);
-			when(gameR.save(game)).thenReturn(game);
+			when(gameR.findById(game.getId())).thenReturn(game);
 			assertNull(gameS.createGameWithTopic2(game, t.getId()));
 		}
 		
@@ -139,7 +138,7 @@ class JUnitMockTests {
 			TsscGame game = new TsscGame();
 			game.setNSprints(2);
 			game.setNGroups(0);
-			when(gameR.findById(game.getId())).thenReturn(Optional.of(game));
+			when(gameR.findById(game.getId())).thenReturn(game);
 			assertNull(gameS.updateGame(game));
 		}
 		
@@ -149,7 +148,7 @@ class JUnitMockTests {
 			TsscGame game = new TsscGame();
 			game.setNSprints(2);
 			game.setNGroups(0);
-			when(gameR.findById(game.getId())).thenReturn(Optional.empty());
+			when(gameR.findById(game.getId())).thenReturn(null);
 			assertThrows(NoSuchElementException.class, () ->{
 				gameS.updateGame(game);
 			});
@@ -161,8 +160,8 @@ class JUnitMockTests {
 			TsscGame game = new TsscGame();
 			game.setNSprints(2);
 			game.setNGroups(3);
-			when(gameR.save(game)).thenReturn(game);
-			when(gameR.findById(game.getId())).thenReturn(Optional.of(game));
+			when(gameR.findById(game.getId())).thenReturn(game);
+			when(gameR.findById(game.getId())).thenReturn(game);
 			assertEquals(gameS.updateGame(game), game);
 		}
 	}
@@ -170,7 +169,7 @@ class JUnitMockTests {
 	@Nested
 	class Topic {
 		@Mock
-		private TopicRepository topicR;
+		private TsscTopicDao topicR;
 
 		@InjectMocks
 		private TopicServiceImp topicS;
@@ -186,7 +185,7 @@ class JUnitMockTests {
 			TsscTopic topic = new TsscTopic();
 			topic.setDefaultSprints(1);
 			topic.setDefaultGroups(1);
-			when(topicR.save(topic)).thenReturn(topic);
+			when(topicR.findById(topic.getId())).thenReturn(topic);
 			assertEquals(topicS.createTopic(topic), topic);
 		}
 
@@ -220,8 +219,8 @@ class JUnitMockTests {
 			topic.setDefaultSprints(1);
 			topic.setDefaultGroups(1);
 			topic.setId(4);
-			when(topicR.save(topic)).thenReturn(topic);
-			when(topicR.findById((long) 4)).thenReturn(Optional.of(topic));
+			when(topicR.findById(topic.getId())).thenReturn(topic);
+			when(topicR.findById((long) 4)).thenReturn(topic);
 			assertEquals(topicS.updateTopic(topic), topic);
 		}
 		
@@ -231,7 +230,7 @@ class JUnitMockTests {
 			TsscTopic topic = new TsscTopic();
 			topic.setDefaultSprints(1);
 			topic.setId(4);
-			when(topicR.findById((long) 4)).thenReturn(Optional.of(topic));
+			when(topicR.findById((long) 4)).thenReturn(topic);
 			assertNull(topicS.updateTopic(topic));
 		}
 		
@@ -241,7 +240,7 @@ class JUnitMockTests {
 			TsscTopic topic = new TsscTopic();
 			topic.setDefaultGroups(1);
 			topic.setId(4);
-			when(topicR.findById((long) 4)).thenReturn(Optional.of(topic));
+			when(topicR.findById((long) 4)).thenReturn(topic);
 			assertNull(topicS.updateTopic(topic));
 		}
 		
@@ -250,7 +249,7 @@ class JUnitMockTests {
 		public void editTopicTest3 () {
 			TsscTopic topic = new TsscTopic();
 			topic.setDefaultGroups(1);
-			when(topicR.findById(topic.getId())).thenReturn(Optional.empty());
+			when(topicR.findById(topic.getId())).thenReturn(null);
 			assertThrows(NoSuchElementException.class, () ->{
 				topicS.updateTopic(topic);
 			});
@@ -260,7 +259,7 @@ class JUnitMockTests {
 	@Nested
 	class Story {
 		@Mock
-		private StoryRepository storyR;
+		private TsscStoryDao storyR;
 
 		@Mock
 		private GameServiceImp gS;
@@ -282,7 +281,7 @@ class JUnitMockTests {
 			story.setBusinessValue(BigDecimal.ZERO);
 			story.setPriority(BigDecimal.ZERO);
 			when(gS.getGame(game.getId())).thenReturn(game);
-			when(storyR.save(story)).thenReturn(story);
+			when(storyR.findById(story.getId())).thenReturn(story);
 			assertNull(storyS.createStory(story, game.getId()));
 		}
 
@@ -295,7 +294,7 @@ class JUnitMockTests {
 			story.setBusinessValue(BigDecimal.TEN);
 			story.setPriority(BigDecimal.TEN);
 			when(gS.getGame(game.getId())).thenReturn(game);
-			when(storyR.save(story)).thenReturn(story);
+			when(storyR.findById(story.getId())).thenReturn(story);
 			assertNull(storyS.createStory(story, game.getId()));
 		}
 
@@ -308,7 +307,7 @@ class JUnitMockTests {
 			story.setBusinessValue(BigDecimal.TEN);
 			story.setPriority(BigDecimal.TEN);
 			when(gS.getGame(game.getId())).thenReturn(null);
-			when(storyR.save(story)).thenReturn(story);
+			when(storyR.findById(story.getId())).thenReturn(story);
 			assertNull(storyS.createStory(story, game.getId()));
 		}
 		
@@ -322,7 +321,7 @@ class JUnitMockTests {
 			story.setBusinessValue(BigDecimal.TEN);
 			story.setPriority(BigDecimal.TEN);
 			when(gS.getGame(game.getId())).thenReturn(game);
-			when(storyR.save(story)).thenReturn(story);
+			when(storyR.findById(story.getId())).thenReturn(story);
 			assertEquals(storyS.createStory(story, game.getId()), story);
 			assertEquals(story.getTsscGame(), game);
 		}
@@ -334,8 +333,8 @@ class JUnitMockTests {
 			story.setInitialSprint(BigDecimal.ZERO);
 			story.setBusinessValue(BigDecimal.TEN);
 			story.setPriority(BigDecimal.TEN);
-			when(storyR.save(story)).thenReturn(story);
-			when(storyR.findById(story.getId())).thenReturn(Optional.of(story));
+			when(storyR.findById(story.getId())).thenReturn(story);
+			when(storyR.findById(story.getId())).thenReturn(story);
 			assertNull(storyS.updateStory(story));
 		}
 		
@@ -346,8 +345,7 @@ class JUnitMockTests {
 			story.setInitialSprint(BigDecimal.TEN);
 			story.setBusinessValue(BigDecimal.TEN);
 			story.setPriority(BigDecimal.TEN);
-			when(storyR.save(story)).thenReturn(story);
-			when(storyR.findById(story.getId())).thenReturn(Optional.empty());
+			when(storyR.findById(story.getId())).thenReturn(null);
 			assertThrows(NoSuchElementException.class, () ->{
 				storyS.updateStory(story);
 			});
@@ -360,8 +358,7 @@ class JUnitMockTests {
 			story.setInitialSprint(BigDecimal.TEN);
 			story.setBusinessValue(BigDecimal.TEN);
 			story.setPriority(BigDecimal.TEN);
-			when(storyR.save(story)).thenReturn(story);
-			when(storyR.findById(story.getId())).thenReturn(Optional.of(story));
+			when(storyR.findById(story.getId())).thenReturn(story);
 			assertEquals(storyS.updateStory(story), story);
 		}
 	}

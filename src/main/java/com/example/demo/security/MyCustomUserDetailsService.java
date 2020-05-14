@@ -9,8 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dao.TsscAdminDao;
 import com.example.demo.modelo.TsscAdmin;
-import com.example.demo.repositorios.AdminRepository;
 import com.example.demo.servicios.AdminService;
 import com.example.demo.servicios.AdminServiceImp;
 
@@ -20,7 +20,7 @@ import lombok.extern.java.Log;
 @Service
 public class MyCustomUserDetailsService implements UserDetailsService {
 	@Autowired
-	private AdminRepository adminR;
+	private TsscAdminDao adminR;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

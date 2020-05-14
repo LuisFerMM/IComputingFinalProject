@@ -4,9 +4,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.dao.TsscAdminDao;
 import com.example.demo.modelo.TsscAdmin;
-import com.example.demo.repositorios.AdminRepository;
 @Service
 public class AdminServiceImp implements AdminService{
 
@@ -14,16 +15,17 @@ public class AdminServiceImp implements AdminService{
 	public static final String ADMIN= "admin";
 	
 	@Autowired
-	AdminRepository adminR;
+	TsscAdminDao adminR;
 	
 	@Override
+	@Transactional
 	public void save(TsscAdmin admin) {
 		adminR.save(admin);
 	}
 
 	@Override
 	public Optional<TsscAdmin> findById(long id) {
-		return adminR.findById(id);
+		return Optional.of(adminR.findById(id));
 	}
 
 	@Override

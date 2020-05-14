@@ -13,54 +13,56 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.dao.TsscGameDao;
 import com.example.demo.modelo.TsscGame;
 import com.example.demo.modelo.TsscStory;
 import com.example.demo.modelo.TsscTopic;
-import com.example.demo.repositorios.GameRepository;
 
 @Service
 public class GameServiceImp implements GameService {
 
-	private GameRepository gameR;
+	private TsscGameDao gameR;
 	private TopicServiceImp topicS;
 	
 	@Autowired
-	public GameServiceImp(GameRepository ga, TopicServiceImp tS) {
+	public GameServiceImp(TsscGameDao ga, TopicServiceImp tS) {
 		gameR = ga;
 		topicS = tS;
 	}
 
 	@Override
+	@Transactional
 	public TsscGame createGame(TsscGame game) {
 		if(game.getNSprints()>0 && game.getNGroups()>0) {
 			if(game.getTsscStories() == null)
 				game.setTsscStories(new ArrayList<>());
-			return gameR.save(game);
+			gameR.save(game);
+			return gameR.findById(game.getId());
 		}
 		return null;
 	}
 
 	@Override
 	public TsscGame getGame(Long game) {
-		Optional<TsscGame> alv = gameR.findById(game);
-		if(!alv.isEmpty())
-			return alv.get();
-		return null;
+		return gameR.findById(game);
 	}
 
 	@Override
+	@Transactional
 	public TsscGame updateGame(TsscGame game)throws NoSuchElementException{
-		try {
-		TsscGame aeditar = gameR.findById(game.getId()).get();
-		} catch (NoSuchElementException e) {
-			throw e;
+		
+		TsscGame aeditar = gameR.findById(game.getId());
+		if(aeditar != null) {
+		if(game.getNSprints()>0 && game.getNGroups()>0) {
+			gameR.update(game);
+			return gameR.findById(game.getId());
+		} else return null;
 		}
-		if(game.getNSprints()>0 && game.getNGroups()>0)
-			return gameR.save(game);
-		return null;
+		throw new NoSuchElementException();
 	}
 
 	@Override
+	@Transactional
 	public TsscGame createGameWithTopic(TsscGame game, Long idTopic) {
 		TsscTopic t = topicS.getTopic(idTopic);
 		if(t !=null) {
@@ -68,7 +70,8 @@ public class GameServiceImp implements GameService {
 			game.setTsscTopic(t);
 			if(game.getTsscStories() == null)
 			game.setTsscStories(new ArrayList<>());
-			return gameR.save(game);
+			gameR.save(game);
+			return gameR.findById(game.getId());
 			}
 		}
 		return null;
@@ -89,7 +92,8 @@ public class GameServiceImp implements GameService {
 			}
 				//aquí se supone que también se copian los cronómetros pero los Topic no tienen una lista de ellos
 			game.setTsscTopic(t);
-			return gameR.save(game);
+			gameR.save(game);
+			return gameR.findById(game.getId());
 		}
 		return null;
 	}

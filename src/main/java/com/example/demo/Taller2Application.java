@@ -7,6 +7,7 @@ import java.time.LocalTime;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
@@ -17,7 +18,7 @@ import com.example.demo.servicios.AdminService;
 import com.example.demo.servicios.AdminServiceImp;
 import com.example.demo.servicios.GameServiceImp;
 import com.example.demo.servicios.TopicServiceImp;
-
+@EntityScan("com.example.demo.modelo")
 @SpringBootApplication
 public class Taller2Application {
 

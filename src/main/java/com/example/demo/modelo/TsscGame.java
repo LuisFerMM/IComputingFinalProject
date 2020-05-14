@@ -2,12 +2,9 @@ package com.example.demo.modelo;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
 import org.hibernate.annotations.Fetch;
