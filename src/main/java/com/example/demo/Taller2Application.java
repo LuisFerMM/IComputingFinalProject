@@ -1,7 +1,5 @@
 package com.example.demo;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -14,10 +12,9 @@ import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
 import com.example.demo.modelo.TsscAdmin;
 import com.example.demo.modelo.TsscGame;
-import com.example.demo.servicios.AdminService;
 import com.example.demo.servicios.AdminServiceImp;
 import com.example.demo.servicios.GameServiceImp;
-import com.example.demo.servicios.TopicServiceImp;
+
 @EntityScan("com.example.demo.modelo")
 @SpringBootApplication
 public class Taller2Application {
