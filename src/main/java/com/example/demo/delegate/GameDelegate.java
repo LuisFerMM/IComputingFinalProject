@@ -8,17 +8,27 @@ public interface GameDelegate {
 	/*
 	 * Read and get an Game
 	 */
-	public TsscGame GET_Game(int id);
+	public TsscGame GET_Game(long id);
 	
 	/*
 	 * Read and get the Topic of a Game
 	 */
-	public TsscTopic GET_TopicGame(int idGame, int idTopic);
+	public TsscTopic GET_TopicGame(long idGame, long idTopic);
 	
 	/*
 	 *  Create an Game from a topic
 	 */
 	public TsscGame POST_GameWithTopic(TsscGame POSTGame); 
+	
+	/*
+	 * Obtener todos los juegos
+	 */
+	public Iterable<TsscGame> GET_Games();
+	
+	/*
+	 * Obtener todos los topics de un juego
+	 */
+	public Iterable<TsscTopic> GET_TopicsGame();
 	
 	/*
 	 * Update/Replace the Topic of a Game

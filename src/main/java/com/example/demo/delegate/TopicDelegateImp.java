@@ -1,5 +1,8 @@
 package com.example.demo.delegate;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.modelo.TsscTopic;
@@ -14,9 +17,16 @@ public class TopicDelegateImp implements TopicDelegate{
 	}
 
 	@Override
-	public TsscTopic GET_Topic(int id) {
+	public TsscTopic GET_Topic(long id) {
 		TsscTopic tsscTopic = restTemplate.getForObject(SERVER+"topics/"+id, TsscTopic.class);
 		return tsscTopic;
+	}
+	
+	@Override
+	public Iterable<TsscTopic> GET_Topics() {
+		TsscTopic[] tsscTopics = restTemplate.getForObject(SERVER+"topics", TsscTopic[].class);
+		List<TsscTopic> lisTopics = Arrays.asList(tsscTopics);
+		return lisTopics;
 	}
 
 	@Override

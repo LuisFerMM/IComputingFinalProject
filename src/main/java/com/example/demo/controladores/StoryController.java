@@ -10,34 +10,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.modelo.TsscGame;
+import com.example.demo.delegate.StoryDelegateImp;
 import com.example.demo.modelo.TsscGame.generalValidator;
 import com.example.demo.modelo.TsscStory;
-import com.example.demo.servicios.StoryServiceImp;
 
-import lombok.extern.java.Log;
-
-@Log
 @Controller
 public class StoryController {
-	
+
 	@Autowired
-	private StoryServiceImp storyS;
+	private StoryDelegateImp storyDelegate;
 	
 	@GetMapping("/games/{id}/stories")
 	public String showStories(@PathVariable("id") long id, Model model) {
-		TsscGame game = storyS.getGameS().getGame(id);
-		if (game == null)
-			throw new IllegalArgumentException("Invalid game Id:" + id);
-		model.addAttribute("game", game);
-		model.addAttribute("stories", game.getTsscStories());
+		model.addAttribute("stories", storyDelegate.GET_GameStories(id));
 		return "games/stories/index";
 	}
 	
 	@GetMapping("/games/{id}/stories/add")
 	public String addstoryPage(@PathVariable("id") long id, Model model) {
 		model.addAttribute("tsscStory", new TsscStory());
-		model.addAttribute("game", storyS.getGameS().getGame(id));
+		//model.addAttribute("game",storyDelegate.GET_GameStories(id));
 		return "games/stories/add-story";
 	}
 	
@@ -46,21 +38,19 @@ public class StoryController {
 		if (!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("tsscStory", story);
-				model.addAttribute("game", storyS.getGameS().getGame(id));
 				return "games/stories/add-story";
 			}
-			storyS.createStory(story, id);
+			storyDelegate.POST_Story(story);			
 		}
 		return "redirect:/games/"+id+"/stories";
 	}
 	
 	@GetMapping("/games/{idG}/stories/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, @PathVariable("idG") long idG, Model model) {
-		TsscStory story = storyS.getStory(id);
+		TsscStory story = storyDelegate.GET_Story(id);
 		if (story == null)
 			throw new IllegalArgumentException("Invalid story Id:" + id);
 		model.addAttribute("tsscStory", story);
-		model.addAttribute("game", storyS.getGameS().getGame(idG));
 		return "games/stories/update-story";
 	}
 
@@ -70,18 +60,16 @@ public class StoryController {
 		if (action != null && !action.equals("Cancel")) {
 		if(bindingResult.hasErrors()) {
 			m.addAttribute("tsscStory", story);
-			m.addAttribute("game", storyS.getGameS().getGame(idG));
 			return "games/stories/update-story";
 		}
-			storyS.updateStory(story);
+			storyDelegate.PUT_Story(story);
 		}
 		return "redirect:/games/"+ idG +"/stories";
 	}
 	
 	@GetMapping("/games/{idG}/stories/del/{id}")
 	public String deletestory(@PathVariable("id") long id, @PathVariable("idG") long idG) {
-		TsscStory story = storyS.getGameS().getGame(idG).removeTsscStory(storyS.getStory(id));
-		storyS.delete(story);
+		storyDelegate.DELETE_StoryGame(idG, id);
 		return "redirect:/games/"+idG+"/stories";
 	}
 }

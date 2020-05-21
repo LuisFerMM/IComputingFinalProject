@@ -10,21 +10,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.modelo.TsscGame;
+import com.example.demo.delegate.TopicDelegateImp;
 import com.example.demo.modelo.TsscGame.generalValidator;
 import com.example.demo.modelo.TsscTopic;
-import com.example.demo.servicios.TopicServiceImp;
 
 @Controller
 public class TopicController {
 
 	@Autowired
-	private TopicServiceImp topicS;
+	private TopicDelegateImp topicDelegate;
 	
 	@GetMapping("/topics/")
 	public String loadTopics (Model model) {
-		if(topicS.findAll().iterator().hasNext())
-			model.addAttribute("topics", topicS.findAll());
+		if(topicDelegate.GET_Topics().iterator().hasNext())
+			model.addAttribute("topics", topicDelegate.GET_Topics());
 		return "topics/index";
 	}
 	
@@ -41,14 +40,14 @@ public class TopicController {
 				model.addAttribute("tsscTopic", topic);
 				return "topics/add-topic";
 			}
-			topicS.createTopic(topic);
+			topicDelegate.POST_Topic(topic);
 		}
 		return "redirect:/topics/";
 	}
 	
 	@GetMapping("/topics/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
-		TsscTopic topic = topicS.getTopic(id);
+		TsscTopic topic = topicDelegate.GET_Topic(id);
 		if (topic == null)
 			throw new IllegalArgumentException("Invalid topic Id:" + id);
 		model.addAttribute("tsscTopic", topic);
@@ -62,15 +61,15 @@ public class TopicController {
 		if(bindingResult.hasErrors()) {
 			return "topics/update-topic";
 		}
-			topicS.updateTopic(topic);
+			topicDelegate.PUT_Topic(topic);
 		}
 		return "redirect:/topics/";
 	}
 	
 	@GetMapping("/topics/del/{id}")
 	public String deleteTopic(@PathVariable("id") long id) {
-		TsscTopic topic = topicS.getTopic(id);
-		topicS.deleteTopic(topic);
+		TsscTopic topic = topicDelegate.GET_Topic(id);
+		topicDelegate.DELETE_Topic(topic);
 		return "redirect:/topics/";
 	}
 }

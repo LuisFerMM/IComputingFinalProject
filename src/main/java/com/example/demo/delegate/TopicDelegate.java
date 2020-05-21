@@ -7,7 +7,12 @@ public interface TopicDelegate {
 	/*
 	 * Read and get an Topic
 	 */
-	public TsscTopic GET_Topic(int id);
+	public TsscTopic GET_Topic(long id);
+	
+	/*
+	 * Obtener todos los Topic
+	 */
+	public Iterable<TsscTopic> GET_Topics();
 	
 	/*
 	 * Create an Topic

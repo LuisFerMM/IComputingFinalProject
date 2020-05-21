@@ -7,7 +7,22 @@ public interface StoryDelegate {
 	/*
 	 * Read and get an Story
 	 */
-	public TsscStory GET_Story(int id);
+	public TsscStory GET_Story(long id);
+	
+	/*
+	 * Obtener todos los Story
+	 */
+	public Iterable<TsscStory> GET_Stories();
+	
+	/*
+	 * Obtiene todas las stories asociadas a un game
+	 */
+	public Iterable<TsscStory> GET_GameStories(long id);
+	
+	/*
+	 * Eliminar el story de un juego
+	 */
+	public void DELETE_StoryGame(long idG, long idS);
 	
 	/*
 	 * Create an Story

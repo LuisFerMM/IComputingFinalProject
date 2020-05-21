@@ -1,6 +1,5 @@
 package com.example.demo.controladores;
 
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,28 +11,27 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.delegate.GameDelegateImp;
 import com.example.demo.modelo.TsscGame;
-import com.example.demo.modelo.TsscTopic;
 import com.example.demo.modelo.TsscGame.generalValidator;
-import com.example.demo.servicios.GameServiceImp;
 
 @Controller
 public class GameController {
-
+	
 	@Autowired
-	private GameServiceImp gameS;
+	private GameDelegateImp gameDelegate;
 	
 	@GetMapping("/games/")
 	public String cargarJuegos(Model model) {
-		if(gameS.findAll().iterator().hasNext())
-		model.addAttribute("games", gameS.findAll());
+		if(gameDelegate.GET_Games().iterator().hasNext())
+		model.addAttribute("games", gameDelegate.GET_Games());
 		return "games/index";
 	}
 	
 	@GetMapping("/games/add")
 	public String addGamePage(Model model) {
 		model.addAttribute("tsscGame", new TsscGame());
-		model.addAttribute("topics", gameS.getTopicS().findAll());
+		model.addAttribute("topics", gameDelegate.GET_TopicsGame());
 		model.addAttribute("tsscTopic", null);
 		return "games/add-game";
 	}
@@ -43,10 +41,10 @@ public class GameController {
 		if (!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("tsscGame", game);
-				model.addAttribute("topics", gameS.getTopicS().findAll());
+				model.addAttribute("topics", gameDelegate.GET_TopicsGame());
 				return "games/add-game";
 			}
-			gameS.createGame(game);
+			gameDelegate.POST_Game(game);
 		}
 		return "redirect:/games/";
 	}
@@ -56,23 +54,22 @@ public class GameController {
 		if (!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("tsscGame", game);
-				model.addAttribute("topics", gameS.getTopicS().findAll());
+				model.addAttribute("topics", gameDelegate.GET_TopicsGame());
 				return "games/add-game";
 			}
 			System.out.println(idT);
-			gameS.createGameWithTopic2(game, idT);
+			gameDelegate.POST_GameWithTopic(game);
 		}
 		return "redirect:/games/";
 	}
 	
 	@GetMapping("/games/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
-		TsscGame game = gameS.getGame(id);
+		TsscGame game = gameDelegate.GET_Game(id);
 		if (game == null)
 			throw new IllegalArgumentException("Invalid game Id:" + id);
 		model.addAttribute("tsscGame", game);
-		model.addAttribute("topics", gameS.getTopicS().findAll());
-//		model.addAttribute("tsscTopic", -1);
+		model.addAttribute("topics", gameDelegate.GET_TopicsGame());
 		return "games/update-game";
 	}
 
@@ -82,10 +79,10 @@ public class GameController {
 		if (action != null && !action.equals("Cancel")) {
 		if(bindingResult.hasErrors()) {
 			m.addAttribute("tsscGame", game);
-			m.addAttribute("topics", gameS.getTopicS().findAll());
+			m.addAttribute("topics", gameDelegate.GET_TopicsGame());
 			return "games/update-game";
 		}
-			gameS.updateGame(game);
+			gameDelegate.PUT_Game(game);
 		}
 		return "redirect:/games/";
 	}
@@ -96,19 +93,18 @@ public class GameController {
 		if (action != null && !action.equals("Cancel")) {
 		if(bindingResult.hasErrors()) {
 			m.addAttribute("tsscGame", game);
-			m.addAttribute("topics", gameS.getTopicS().findAll());
+			m.addAttribute("topics", gameDelegate.GET_TopicsGame());
 			return "games/update-game";
 		}
-			System.out.println(idT);
-			gameS.createGameWithTopic2(game, idT);
+			gameDelegate.POST_GameWithTopic(game);
 		}
 		return "redirect:/games/";
 	}
 	
 	@GetMapping("/games/del/{id}")
 	public String deleteGame(@PathVariable("id") long id) {
-		TsscGame game = gameS.getGame(id);
-		gameS.delete(game);
+		TsscGame game = gameDelegate.GET_Game(id);
+		gameDelegate.DELETE_Game(game);
 		return "redirect:/games/";
 	}
 	
