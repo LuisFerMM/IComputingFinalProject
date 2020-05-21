@@ -18,7 +18,7 @@ public interface GameDelegate {
 	/*
 	 *  Create an Game from a topic
 	 */
-	public TsscGame POST_GameWithTopic(TsscGame POSTGame); 
+	public TsscGame POST_GameWithTopic(TsscGame POSTGame, long idTopic); 
 	
 	/*
 	 * Obtener todos los juegos

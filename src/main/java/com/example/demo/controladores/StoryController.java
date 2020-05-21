@@ -29,7 +29,6 @@ public class StoryController {
 	@GetMapping("/games/{id}/stories/add")
 	public String addstoryPage(@PathVariable("id") long id, Model model) {
 		model.addAttribute("tsscStory", new TsscStory());
-		//model.addAttribute("game",storyDelegate.GET_GameStories(id));
 		return "games/stories/add-story";
 	}
 	

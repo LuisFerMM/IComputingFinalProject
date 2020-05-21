@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class AdminController {
 
-	//@Autowired
-	//private AdminServiceImp adminS;
-	
 	@GetMapping("/login")
 	public String loginPage() {
 		return "/loginP";

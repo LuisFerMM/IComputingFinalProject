@@ -11,7 +11,7 @@ import com.example.demo.modelo.TsscTopic;
 public class GameDelegateImp implements GameDelegate {
 
 	RestTemplate restTemplate;
-	final String SERVER = "http://localhost:8081/";
+	final String SERVER = "http://localhost:8081/backapi/";
 	
 	public GameDelegateImp() {
 		restTemplate = new RestTemplate();
@@ -43,8 +43,8 @@ public class GameDelegateImp implements GameDelegate {
 	 *Good?
 	 */
 	@Override
-	public TsscGame POST_GameWithTopic(TsscGame POSTGame) {
-		TsscGame tsscAdmin = restTemplate.postForObject(SERVER+"games", POSTGame , TsscGame.class);
+	public TsscGame POST_GameWithTopic(TsscGame POSTGame, long idT) {
+		TsscGame tsscAdmin = restTemplate.postForObject(SERVER+"games/"+POSTGame.getId()+"/topics/"+idT, POSTGame , TsscGame.class);
 		return tsscAdmin;
 	}
 
