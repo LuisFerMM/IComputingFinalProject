@@ -11,7 +11,7 @@ import com.example.demo.modelo.TsscStory;
 public class StoryDelegateImp implements StoryDelegate{
 
 	RestTemplate restTemplate;
-	final String SERVER = "http://localhost:8081/";
+	final String SERVER = "http://localhost:8081/backapi/";
 	
 	public StoryDelegateImp() {
 		restTemplate = new RestTemplate();

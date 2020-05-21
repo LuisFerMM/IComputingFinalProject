@@ -10,7 +10,7 @@ import com.example.demo.modelo.TsscTopic;
 public class TopicDelegateImp implements TopicDelegate{
 
 	RestTemplate restTemplate;
-	final String SERVER = "http://localhost:8081/";
+	final String SERVER = "http://localhost:8081/backapi/";
 	
 	public TopicDelegateImp() {
 		restTemplate = new RestTemplate();

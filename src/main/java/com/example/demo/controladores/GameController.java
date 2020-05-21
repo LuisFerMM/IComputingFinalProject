@@ -63,8 +63,7 @@ public class GameController {
 				model.addAttribute("topics", gameDelegate.GET_TopicsGame());
 				return "games/add-game";
 			}
-			System.out.println(idT);
-			gameDelegate.POST_GameWithTopic(game);
+			gameDelegate.POST_GameWithTopic(game, idT);
 		}
 		return "redirect:/games/";
 	}
@@ -102,7 +101,7 @@ public class GameController {
 			m.addAttribute("topics", gameDelegate.GET_TopicsGame());
 			return "games/update-game";
 		}
-			gameDelegate.POST_GameWithTopic(game);
+			gameDelegate.POST_GameWithTopic(game, idT);
 		}
 		return "redirect:/games/";
 	}
