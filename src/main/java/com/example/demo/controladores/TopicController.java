@@ -5,16 +5,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.delegate.TopicDelegateImp;
 import com.example.demo.modelo.TsscGame.generalValidator;
 import com.example.demo.modelo.TsscTopic;
 
-@Controller
+@CrossOrigin
+@RestController
+@RequestMapping("/frontapi")
 public class TopicController {
 
 	@Autowired

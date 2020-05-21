@@ -53,6 +53,7 @@ public class TopicServiceImp implements TopicService{
 	}
 
 	@Override
+	@Transactional
 	public void deleteTopic(TsscTopic topic) {
 		topicR.delete(topic);
 	}

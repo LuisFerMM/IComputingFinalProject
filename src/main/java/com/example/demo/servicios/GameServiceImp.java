@@ -104,6 +104,7 @@ public class GameServiceImp implements GameService {
 	}
 	
 	@Override
+	@Transactional
 	public void delete(TsscGame game) {
 		gameR.delete(game);
 	}

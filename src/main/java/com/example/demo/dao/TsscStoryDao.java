@@ -44,8 +44,13 @@ public class TsscStoryDao implements ITsscStoryDao{
 
 	@Override
 	public List<TsscStory> findAll() {
-		String jpql = "Select a from TAlumno a";
+		String jpql = "Select a from TsscStory a";
 		return 	entityManager.createQuery(jpql).getResultList();	
+	}
+
+	public Iterable<TsscStory> findByGameId(long id) {
+		String jpql = "Select a from TsscStory a where a.";
+		return 	entityManager.createQuery(jpql).getResultList();
 	}
 	
 }

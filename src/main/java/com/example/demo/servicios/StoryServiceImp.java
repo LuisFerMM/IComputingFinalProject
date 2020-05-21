@@ -33,7 +33,7 @@ public class StoryServiceImp implements StoryService {
 		if (story.getBusinessValue() != null && story.getBusinessValue().compareTo(BigDecimal.ZERO) == 1
 				&& story.getInitialSprint() != null && story.getInitialSprint().compareTo(BigDecimal.ZERO) == 1
 				&& story.getPriority() != null && story.getPriority().compareTo(BigDecimal.ZERO) == 1 && g != null) {
-			g.addTsscStory(story);
+			//g.addTsscStory(story);
 			storyR.save(story);
 			return storyR.findById(story.getId());
 		}
@@ -74,5 +74,9 @@ public class StoryServiceImp implements StoryService {
 
 	public GameServiceImp getGameS() {
 		return gS;
+	}
+
+	public Iterable<TsscStory> findByGameId(long id) {
+		return storyR.findByGameId(id);
 	}
 }
