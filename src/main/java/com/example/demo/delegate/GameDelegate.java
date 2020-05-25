@@ -1,5 +1,7 @@
 package com.example.demo.delegate;
 
+import java.net.URISyntaxException;
+
 import com.example.demo.modelo.TsscGame;
 import com.example.demo.modelo.TsscTopic;
 
@@ -38,7 +40,7 @@ public interface GameDelegate {
 	/*
 	 * Create an Game
 	 */
-	public TsscGame POST_Game(TsscGame POSTGame);
+	public TsscGame POST_Game(TsscGame POSTGame) throws URISyntaxException;
 	
 	/*
 	 * Update/Replace an Game

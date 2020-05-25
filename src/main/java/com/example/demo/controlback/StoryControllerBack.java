@@ -48,14 +48,9 @@ public class StoryControllerBack {
 		return "redirect:/games/"+id+"/stories";
 	}
 	
-	@GetMapping("/games/{idG}/stories/{id}")
-	public String showUpdateForm(@PathVariable("id") long id, @PathVariable("idG") long idG, Model model) {
-		TsscStory story = storyS.getStory(id);
-		if (story == null)
-			throw new IllegalArgumentException("Invalid story Id:" + id);
-		model.addAttribute("tsscStory", story);
-		model.addAttribute("game", storyS.getGameS().getGame(idG));
-		return "games/stories/update-story";
+	@GetMapping("/stories/{id}")
+	public TsscStory showUpdateForm(@PathVariable("id") long id, @PathVariable("idG") long idG) {
+		return storyS.getStory(id);
 	}
 
 	@PutMapping("/games/{idG}/stories")

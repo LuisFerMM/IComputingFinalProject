@@ -43,11 +43,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 
 		httpSecurity.authorizeRequests()
-		.antMatchers("/topics/**").hasRole(AdminServiceImp.SUPER_ADMIN)
-		.antMatchers("/**").authenticated()
+		.antMatchers("/frontapi/topics/**").hasRole(AdminServiceImp.SUPER_ADMIN)
+		.antMatchers("/frontapi/**").authenticated().antMatchers("/backapi/**").permitAll()
 		.and().logout().invalidateHttpSession(true).clearAuthentication(true)
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout").permitAll()
+		.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/frontapi/login?logout").permitAll()
 		.and().exceptionHandling().accessDeniedHandler(accessDeniedHandler)
-		.and().formLogin().loginPage("/login").permitAll();
+		.and().formLogin().loginPage("/frontapi/login").permitAll();
 	}
 }

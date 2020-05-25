@@ -3,11 +3,17 @@ package com.example.demo.delegate;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.modelo.TsscGame;
 import com.example.demo.modelo.TsscTopic;
 
+@Component
 public class GameDelegateImp implements GameDelegate {
 
 	RestTemplate restTemplate;
@@ -58,13 +64,16 @@ public class GameDelegateImp implements GameDelegate {
 
 	@Override
 	public TsscGame POST_Game(TsscGame POSTGame) {
-		TsscGame tsscAdmin = restTemplate.postForObject(SERVER+"games", POSTGame , TsscGame.class);
-		return tsscAdmin;
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<TsscGame> req = new HttpEntity<>(POSTGame, headers);
+		ResponseEntity<TsscGame> tsscAdmin = restTemplate.postForEntity(SERVER+"games", req, TsscGame.class);
+		return tsscAdmin.getBody();
 	}
 
 	@Override
 	public void PUT_Game(TsscGame PUTGame) {
-		restTemplate.put(SERVER+"games/"+PUTGame.getId(), PUTGame, TsscGame.class);				
+		restTemplate.put(SERVER+"games", PUTGame, TsscGame.class);				
 	}
 
 	@Override

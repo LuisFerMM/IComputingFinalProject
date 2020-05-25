@@ -37,6 +37,7 @@ public class GameServiceImp implements GameService {
 			if(game.getTsscStories() == null)
 				game.setTsscStories(new ArrayList<>());
 			gameR.save(game);
+			System.out.println(game.getId());
 			return gameR.findById(game.getId());
 		}
 		return null;
@@ -93,6 +94,27 @@ public class GameServiceImp implements GameService {
 				//aquí se supone que también se copian los cronómetros pero los Topic no tienen una lista de ellos
 			game.setTsscTopic(t);
 			gameR.save(game);
+			return gameR.findById(game.getId());
+		}
+		return null;
+	}
+	
+	@Transactional
+	@Override
+	public TsscGame updateGameWithTopic2(TsscGame game, Long idTopic) {
+		TsscTopic t = topicS.getTopic(idTopic);
+		if(t !=null && game.getNSprints()>0 && game.getNGroups()>0) {
+			List <TsscStory> stories = t.getTsscStories();
+			for (int i = 0; i < stories.size(); i++) {
+				TsscStory story = new TsscStory();
+				if(game.getTsscStories() == null)
+					game.setTsscStories(new ArrayList<>());
+				BeanUtils.copyProperties(stories.get(i), story);
+				game.addTsscStory(story);
+			}
+				//aquí se supone que también se copian los cronómetros pero los Topic no tienen una lista de ellos
+			game.setTsscTopic(t);
+			gameR.update(game);
 			return gameR.findById(game.getId());
 		}
 		return null;

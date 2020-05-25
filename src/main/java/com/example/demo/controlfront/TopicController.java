@@ -1,4 +1,4 @@
-package com.example.demo.controladores;
+package com.example.demo.controlfront;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ import com.example.demo.modelo.TsscGame.generalValidator;
 import com.example.demo.modelo.TsscTopic;
 
 @CrossOrigin
-@RestController
+@Controller
 @RequestMapping("/frontapi")
 public class TopicController {
 
@@ -47,7 +47,7 @@ public class TopicController {
 			}
 			topicDelegate.POST_Topic(topic);
 		}
-		return "redirect:/topics/";
+		return "redirect:/frontapi/topics/";
 	}
 	
 	@GetMapping("/topics/edit/{id}")
@@ -68,13 +68,13 @@ public class TopicController {
 		}
 			topicDelegate.PUT_Topic(topic);
 		}
-		return "redirect:/topics/";
+		return "redirect:/frontapi/topics/";
 	}
 	
 	@GetMapping("/topics/del/{id}")
 	public String deleteTopic(@PathVariable("id") long id) {
 		TsscTopic topic = topicDelegate.GET_Topic(id);
 		topicDelegate.DELETE_Topic(topic);
-		return "redirect:/topics/";
+		return "redirect:/frontapi/topics/";
 	}
 }

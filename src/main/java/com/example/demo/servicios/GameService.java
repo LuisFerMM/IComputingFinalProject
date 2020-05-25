@@ -10,4 +10,5 @@ public interface GameService {
 	public TsscGame updateGame (TsscGame game);
 	public void delete (TsscGame game);
 	public Iterable<TsscGame> findAll();
+	TsscGame updateGameWithTopic2(TsscGame game, Long idTopic);
 }

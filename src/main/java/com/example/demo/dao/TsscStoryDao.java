@@ -49,8 +49,8 @@ public class TsscStoryDao implements ITsscStoryDao{
 	}
 
 	public Iterable<TsscStory> findByGameId(long id) {
-		String jpql = "Select a from TsscStory a where a.";
-		return 	entityManager.createQuery(jpql).getResultList();
+		String jpql = "Select a from TsscStory a where a.tsscGame.id = :id";
+		return 	entityManager.createQuery(jpql).setParameter("id", id).getResultList();
 	}
 	
 }

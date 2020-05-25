@@ -20,7 +20,7 @@
 		<h2 class="mb-5">New Story</h2>
 		<div class="row">
 			<div class="col-md-6">
-				<form action="#" th:action="@{/games/{id}/stories/add(id=${game.id})}" th:object="${tsscStory}"
+				<form action="#" th:action="@{/frontapi/games/{id}/stories/add(id=${gameId})}" th:object="${tsscStory}"
 					method="post">
 					<div class="row">
 						<div class="form-group col-md-6">

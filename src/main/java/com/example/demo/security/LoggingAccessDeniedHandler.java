@@ -31,7 +31,7 @@ public class LoggingAccessDeniedHandler implements AccessDeniedHandler {
                     + request.getRequestURI());
         }
 
-        response.sendRedirect(request.getContextPath() + "/access-denied");
+        response.sendRedirect(request.getContextPath() + "/frontapi/access-denied");
 
     }
 }

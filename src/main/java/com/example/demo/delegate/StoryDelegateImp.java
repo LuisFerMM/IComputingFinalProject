@@ -4,10 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.modelo.TsscStory;
-
+@Component
 public class StoryDelegateImp implements StoryDelegate{
 
 	RestTemplate restTemplate;
@@ -30,16 +31,16 @@ public class StoryDelegateImp implements StoryDelegate{
 		return lisStories;
 	}
 	
-	@Autowired
+	@Override
 	public Iterable<TsscStory> GET_GameStories(long id) {
-		TsscStory[] tsscStories = restTemplate.getForObject(SERVER+"game/"+id+"/stories", TsscStory[].class);
+		TsscStory[] tsscStories = restTemplate.getForObject(SERVER+"games/"+id+"/stories", TsscStory[].class);
 		List<TsscStory> lisStories = Arrays.asList(tsscStories);
 		return lisStories;
 	}
 	
-	@Autowired
+	@Override
 	public void DELETE_StoryGame(long idG, long idS ) {
-		restTemplate.delete(SERVER+"game/"+idG+"/stories/"+idS);
+		restTemplate.delete(SERVER+"games/"+idG+"/stories/"+idS);
 	}
 
 	@Override

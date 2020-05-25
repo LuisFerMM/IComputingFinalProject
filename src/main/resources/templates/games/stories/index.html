@@ -39,16 +39,16 @@
 								<td class="text-info" th:text="${story.businessValue}"></td>
 								<td class="text-info" th:text="${story.initialSprint}"></td>
 								<td class="text-info" th:text="${story.Priority}"></td>
-								<td><a th:href="@{/games/{idG}/stories/edit/{id}(idG=${game.id},id=${story.id})}"
+								<td><a th:href="@{/frontapi/games/{idG}/stories/edit/{id}(idG=${game.id},id=${story.id})}"
 									class="btn btn-primary"><i class="fas fa-edit ml-2"></i></a></td>
-								<td><a th:href="@{/games/{idG}/stories/del/{id}(id=${story.id},idG=${game.id})}"
+								<td><a th:href="@{/frontapi/games/{idG}/stories/del/{id}(id=${story.id},idG=${game.id})}"
 									class="btn btn-primary"><i class="fas fa-trash-alt ml-2"></i></a></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 				<p class="my-5">
-					<a th:href="@{/games/{id}/stories/add(id=${game.id})}" class="btn btn-primary"><i
+					<a th:href="@{/frontapi/games/{id}/stories/add(id=${game.id})}" class="btn btn-primary"><i
 						class="fas fa-plus-circle ml-2"></i></a>
 				</p>
 			</div>

@@ -1,4 +1,4 @@
-package com.example.demo.controladores;
+package com.example.demo.controlfront;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,27 +13,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.delegate.GameDelegateImp;
 import com.example.demo.delegate.StoryDelegateImp;
 import com.example.demo.modelo.TsscGame.generalValidator;
 import com.example.demo.modelo.TsscStory;
 
 @CrossOrigin
-@RestController
+@Controller
 @RequestMapping("/frontapi")
 public class StoryController {
 
 	@Autowired
 	private StoryDelegateImp storyDelegate;
+	@Autowired
+	private GameDelegateImp gameDelegate;
 	
 	@GetMapping("/games/{id}/stories")
 	public String showStories(@PathVariable("id") long id, Model model) {
 		model.addAttribute("stories", storyDelegate.GET_GameStories(id));
+		model.addAttribute("game", gameDelegate.GET_Game(id));
 		return "games/stories/index";
 	}
 	
 	@GetMapping("/games/{id}/stories/add")
 	public String addstoryPage(@PathVariable("id") long id, Model model) {
 		model.addAttribute("tsscStory", new TsscStory());
+		model.addAttribute("gameId", id);
 		return "games/stories/add-story";
 	}
 	
@@ -46,7 +51,7 @@ public class StoryController {
 			}
 			storyDelegate.POST_Story(story);			
 		}
-		return "redirect:/games/"+id+"/stories";
+		return "redirect:/frontapi/games/"+id+"/stories";
 	}
 	
 	@GetMapping("/games/{idG}/stories/edit/{id}")
@@ -68,12 +73,12 @@ public class StoryController {
 		}
 			storyDelegate.PUT_Story(story);
 		}
-		return "redirect:/games/"+ idG +"/stories";
+		return "redirect:/frontapi/games/"+ idG +"/stories";
 	}
 	
 	@GetMapping("/games/{idG}/stories/del/{id}")
 	public String deletestory(@PathVariable("id") long id, @PathVariable("idG") long idG) {
 		storyDelegate.DELETE_StoryGame(idG, id);
-		return "redirect:/games/"+idG+"/stories";
+		return "redirect:/frontapi/games/"+idG+"/stories";
 	}
 }

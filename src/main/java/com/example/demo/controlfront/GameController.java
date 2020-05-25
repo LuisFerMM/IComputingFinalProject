@@ -1,4 +1,4 @@
-package com.example.demo.controladores;
+package com.example.demo.controlfront;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,8 @@ import com.example.demo.delegate.GameDelegateImp;
 import com.example.demo.modelo.TsscGame;
 import com.example.demo.modelo.TsscGame.generalValidator;
 
-@CrossOrigin
-@RestController
+@Controller
 @RequestMapping("/frontapi")
-//@Controller
 public class GameController {
 	
 	@Autowired
@@ -43,16 +41,16 @@ public class GameController {
 	}
 	
 	@PostMapping("/games/add")
-	public String saveGame(@Validated({generalValidator.class}) TsscGame game, BindingResult bindingResult, @RequestParam(value = "action", required = true) String action, Model model) {			
+	public String saveGame(TsscGame game, @RequestParam(value = "action", required = true) String action, Model model) {			
 		if (!action.equals("Cancel")) {
-			if(bindingResult.hasErrors()) {
-				model.addAttribute("tsscGame", game);
-				model.addAttribute("topics", gameDelegate.GET_TopicsGame());
-				return "games/add-game";
-			}
 			gameDelegate.POST_Game(game);
+//			if(bindingResult.hasErrors()) {
+//				model.addAttribute("tsscGame", game);
+//				model.addAttribute("topics", gameDelegate.GET_TopicsGame());
+//				return "games/add-game";
+//			}
 		}
-		return "redirect:/games/";
+		return "redirect:/frontapi/games/";
 	}
 	
 	@PostMapping("/games/add/{idT}")
@@ -65,7 +63,7 @@ public class GameController {
 			}
 			gameDelegate.POST_GameWithTopic(game, idT);
 		}
-		return "redirect:/games/";
+		return "redirect:/frontapi/games/";
 	}
 	
 	@GetMapping("/games/edit/{id}")
@@ -89,7 +87,7 @@ public class GameController {
 		}
 			gameDelegate.PUT_Game(game);
 		}
-		return "redirect:/games/";
+		return "redirect:/frontapi/games/";
 	}
 	
 	@PostMapping("/games/edit/{idT}")
@@ -103,14 +101,14 @@ public class GameController {
 		}
 			gameDelegate.POST_GameWithTopic(game, idT);
 		}
-		return "redirect:/games/";
+		return "redirect:/frontapi/games/";
 	}
 	
 	@GetMapping("/games/del/{id}")
 	public String deleteGame(@PathVariable("id") long id) {
 		TsscGame game = gameDelegate.GET_Game(id);
 		gameDelegate.DELETE_Game(game);
-		return "redirect:/games/";
+		return "redirect:/frontapi/games/";
 	}
 	
 }

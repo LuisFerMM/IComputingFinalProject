@@ -3,6 +3,7 @@ package com.example.demo.controlback;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,7 +24,6 @@ import com.example.demo.modelo.TsscTopic;
 import com.example.demo.modelo.TsscGame.generalValidator;
 import com.example.demo.servicios.GameServiceImp;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/backapi")
 public class GameControllerBack {
@@ -31,7 +31,7 @@ public class GameControllerBack {
 	@Autowired
 	private GameServiceImp gameS;
 	
-	@GetMapping("/games/")
+	@GetMapping("/games")
 	public Iterable<TsscGame> cargarJuegos() {
 		return gameS.findAll();
 	}
@@ -41,24 +41,36 @@ public class GameControllerBack {
 		return gameS.getGame(id);
 	}
 	
-	@PostMapping("/games/")
-	public TsscGame saveGame(@RequestBody TsscGame game) {			
-		return gameS.createGame(game);
+	@PostMapping("/games")
+	public ResponseEntity saveGame(@RequestBody @Validated({generalValidator.class}) TsscGame game, BindingResult bindingResult) {
+			if(bindingResult.hasErrors()) {
+				System.out.println("has errors");
+				return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+			}
+		return ResponseEntity.ok().body(gameS.createGame(game));
 	}
 	
 	@PostMapping("/games/{idT}")
-	public TsscGame saveGame(@RequestBody TsscGame game, @PathVariable("idT") long idT) {			
-		return gameS.createGameWithTopic2(game, idT);
+	public ResponseEntity saveGame(@Validated({generalValidator.class}) @RequestBody TsscGame game, BindingResult bindingResult, @PathVariable("idT") long idT, @RequestParam(value = "action", required = true) String action) {
+			if(bindingResult.hasErrors()) {
+				System.out.println("entra con idT");
+				return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+			}
+			System.out.println(idT);
+		return ResponseEntity.ok(gameS.createGameWithTopic2(game, idT));
 	}
 	
-	@PutMapping("/games/")
-	public void updateGame(@RequestBody TsscGame game) {
-			gameS.updateGame(game);
+	@PutMapping("/games")
+	public ResponseEntity updateGame(@Validated({generalValidator.class}) @RequestBody TsscGame game, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
+		}
+			return ResponseEntity.ok(gameS.updateGame(game));
 	}
 	
 	@PutMapping("/games/{idT}")
-	public void updateGame(@RequestBody TsscGame game, @PathVariable("idT") long idT) {
-			gameS.createGameWithTopic2(game, idT);
+	public void updateGame(@Validated({generalValidator.class}) @RequestBody TsscGame game, BindingResult bindingResult, @PathVariable("idT") long idT) {
+		ResponseEntity.ok(gameS.updateGameWithTopic2(game, idT));
 	}
 	
 	@DeleteMapping("/games/{id}")

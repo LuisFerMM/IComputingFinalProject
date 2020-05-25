@@ -3,10 +3,12 @@ package com.example.demo.delegate;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.modelo.TsscTopic;
-
+@Component
 public class TopicDelegateImp implements TopicDelegate{
 
 	RestTemplate restTemplate;
@@ -31,7 +33,8 @@ public class TopicDelegateImp implements TopicDelegate{
 
 	@Override
 	public TsscTopic POST_Topic(TsscTopic POSTTopic) {
-		TsscTopic tsscTopic = restTemplate.postForObject(SERVER+"topics", POSTTopic , TsscTopic.class);
+		HttpEntity req = new HttpEntity(POSTTopic);
+		TsscTopic tsscTopic = restTemplate.postForObject(SERVER+"topics", req , TsscTopic.class);
 		return tsscTopic;
 	}
 

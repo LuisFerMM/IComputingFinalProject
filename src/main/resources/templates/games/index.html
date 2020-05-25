@@ -45,11 +45,11 @@
 								<td class="text-info" th:text="${game.nGroups}"></td>
 								<td class="text-info" th:text="${game.nSprints}"></td>
 								<td class="text-info"></td>
-								<td><a th:href="@{/games/edit/{id}(id=${game.id})}"
+								<td><a th:href="@{/frontapi/games/edit/{id}(id=${game.id})}"
 									class="btn btn-primary"><i class="fas fa-edit ml-2"></i></a></td>
-								<td><a th:href="@{/games/del/{id}(id=${game.id})}"
+								<td><a th:href="@{/frontapi/games/del/{id}(id=${game.id})}"
 									class="btn btn-primary"><i class="fas fa-trash-alt ml-2"></i></a></td>
-								<td><a th:href="@{/games/{id}/stories(id=${game.id})}"
+								<td><a th:href="@{/frontapi/games/{id}/stories(id=${game.id})}"
 									class="btn btn-primary"><i class="fas fa-bible ml-2"></i></a></td>
 								<td><a th:if="${game.tsscTopic}!=null" th:href="@{/topics/edit/{id}(id=${game.tsscTopic.id})}"
 									class="btn btn-primary"><i class="fas fa-angry ml-2"></i></a></td>
@@ -58,7 +58,7 @@
 					</table>
 				</div>
 				<p class="my-5">
-					<a href="/games/add" class="btn btn-primary"><i
+					<a href="/frontapi/games/add" class="btn btn-primary"><i
 						class="fas fa-plus-circle ml-2"></i></a>
 				</p>
 			</div>

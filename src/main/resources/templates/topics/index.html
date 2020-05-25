@@ -41,16 +41,16 @@
 								<td class="text-info" th:text="${topic.defaultGroups}"></td>
 								<td class="text-info" th:text="${topic.defaultSprints}"></td>
 								<td class="text-info" th:text="${topic.groupPrefix}"></td>
-								<td><a th:href="@{/topics/edit/{id}(id=${topic.id})}"
+								<td><a th:href="@{/frontapi/topics/edit/{id}(id=${topic.id})}"
 									class="btn btn-primary"><i class="fas fa-edit ml-2"></i></a></td>
-								<td><a th:href="@{/topics/del/{id}(id=${topic.id})}"
+								<td><a th:href="@{/frontapi/topics/del/{id}(id=${topic.id})}"
 									class="btn btn-primary"><i class="fas fa-trash-alt ml-2"></i></a></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 				<p class="my-5">
-					<a href="/topics/add" class="btn btn-primary"><i
+					<a href="/frontapi/topics/add" class="btn btn-primary"><i
 						class="fas fa-plus-circle ml-2"></i></a>
 				</p>
 			</div>
