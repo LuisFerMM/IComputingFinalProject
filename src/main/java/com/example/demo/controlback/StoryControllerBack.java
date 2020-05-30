@@ -39,7 +39,6 @@ public class StoryControllerBack {
 	
 	@PostMapping("/games/{id}/stories")
 	public ResponseEntity savestory(@RequestBody TsscStory story, @PathVariable("id") long id) {			
-
 		return ResponseEntity.ok(storyS.createStory(story, id));
 	}
 	
@@ -50,7 +49,6 @@ public class StoryControllerBack {
 
 	@PutMapping("/stories")
 	public void updatestory(@Validated({generalValidator.class}) TsscStory story, @PathVariable("idG") long idG) {
-		
 		ResponseEntity.ok(storyS.updateStory(story));
 	}
 	

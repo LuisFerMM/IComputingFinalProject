@@ -22,11 +22,6 @@ public class AdminController {
 		return "/access-denied";
 	}
 	
-	@GetMapping("/error")
-	public String error() {
-		return "/error";
-	}
-	
 	@PostMapping("/goBack")
 	public String goBack() {
 		return "redirect:/frontapi/games/";

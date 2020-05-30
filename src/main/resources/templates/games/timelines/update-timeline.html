@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>Editar Cronograma</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="../css/shards.min.css">
+</head>
+<body>
+	<div class="container my-5">
+		<h2 class="mb-5">Editar Cronograma</h2>
+		<div class="row">
+			<div class="col-md-5">
+				<form action="#" th:object="${tsscTimecontrol}"
+					th:action="@{/games/{id}/timelines/edit(id=${game.id})}"method="post">
+					<div class="row">
+					<div class="form-group col-md-6">
+							<label for="name" class="col-form-label">Nombre cronograma</label> 
+							<br>
+							<span th:if="${#fields.hasErrors('name')}"
+								th:errors="*{name}" class="text-danger"></span>
+							<input
+								type="text" th:field="*{name}" class="form-control" id="name"
+								placeholder="201-MGP-Full">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="autostart" class="col-form-label">Auto inicio cronograma</label>
+							<br>
+							<span th:if="${#fields.hasErrors('autostart')}" th:errors="*{autostart}" class="text-danger"></span>
+							 <input type="text" th:field="*{autostart}" class="form-control" id="autostart">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="intervalRunning" class="col-form-label">Intervalo ejecucion</label>
+							<br>
+							<span th:if="${#fields.hasErrors('intervalRunning')}" th:errors="*{intervalRunning}" class="text-danger"></span>
+							 <input type="number" th:field="*{intervalRunning}" class="form-control" id="intervalRunning">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="lastPlayTime" class="col-form-label">Ultimo tiempo de juego</label>
+							<br>
+							<span th:if="${#fields.hasErrors('lastPlayTime')}" th:errors="*{lastPlayTime}" class="text-danger"></span>
+							 <input type="time" th:field="*{lastPlayTime}" class="form-control" id="lastPlayTime">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="order" class="col-form-label">Orden</label> 
+							<br>
+							<span th:if="${#fields.hasErrors('order')}" th:errors="*{order}" class="text-danger"></span>
+							<input type="number" th:field="*{order}" class="form-control" id="order">
+						</div>
+							<div class="form-group col-md-6">
+							<label for="state" class="col-form-label">Estado</label>
+							<br>
+							<input type="text" th:field="*{state}" class="form-control" id="state" placeholder="Estado">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="timeInterval" class="col-form-label">Intervalo de tiempo</label>
+							<br>
+							<span th:if="${#fields.hasErrors('timeInterval')}" th:errors="*{timeInterval}" class="text-danger"></span>
+							 <input type="number" th:field="*{timeInterval}" class="form-control" id="timeInterval">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="type" class="col-form-label">Tipo</label>
+							<br>
+							<input type="text" th:field="*{type}" class="form-control" id="type" placeholder="Tipo">
+						</div>		
+					<div>
+					<input type="hidden" class="btn btn-primary" value="">
+                       </div>	
+					</div>
+					<div class="row">
+						<div class="col-md-4 mt-3">
+							<input type="submit" name="action" class="btn btn-primary" value="Actualizar">
+						</div>
+						<div class="col-md-3 mt-3">
+							<input type="submit" name="action" class="btn btn-secondary" value="Cancelar">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>l>

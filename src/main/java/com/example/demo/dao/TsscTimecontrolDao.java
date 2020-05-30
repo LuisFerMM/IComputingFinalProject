@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.modelo.TsscAdmin;
 import com.example.demo.modelo.TsscGame;
+import com.example.demo.modelo.TsscStory;
 import com.example.demo.modelo.TsscTimecontrol;
 
 @Repository

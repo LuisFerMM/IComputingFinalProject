@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.example.demo.delegate.StoryDelegateImp;
+import com.example.demo.modelo.TsscGame;
 import com.example.demo.modelo.TsscStory;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -51,9 +52,9 @@ class JUnitStoryDelegate {
 		tsscStory.setNumber(new BigDecimal("100"));
 		tsscStory.setPriority(new BigDecimal("100"));
 		tsscStory.setShortDescription("tsscStory1");
-		
-//		when(storyDelegate.POST_Story(tsscStory)).thenReturn(tsscStory);
-//		assertTrue(storyDelegate.POST_Story(tsscStory).getDescription().equals(tsscStory.getDescription()));
+
+		when(storyDelegate.POST_Story(tsscStory,1)).thenReturn(tsscStory);
+		assertTrue(storyDelegate.POST_Story(tsscStory,1).getDescription().equals(tsscStory.getDescription()));
 	}
 	
 }
