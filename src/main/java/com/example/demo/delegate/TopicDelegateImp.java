@@ -40,7 +40,7 @@ public class TopicDelegateImp implements TopicDelegate{
 
 	@Override
 	public void PUT_Topic(TsscTopic PUTTopic) {
-		restTemplate.put(SERVER+"topics/"+PUTTopic.getId(), PUTTopic, TsscTopic.class);				
+		restTemplate.put(SERVER+"topics", PUTTopic, TsscTopic.class);				
 	}
 
 	@Override

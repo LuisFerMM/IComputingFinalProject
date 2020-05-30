@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 
-		httpSecurity.authorizeRequests()
+		httpSecurity.csrf().disable().authorizeRequests()
 		.antMatchers("/frontapi/topics/**").hasRole(AdminServiceImp.SUPER_ADMIN)
 		.antMatchers("/frontapi/**").authenticated().antMatchers("/backapi/**").permitAll()
 		.and().logout().invalidateHttpSession(true).clearAuthentication(true)

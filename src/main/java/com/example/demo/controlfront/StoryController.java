@@ -49,7 +49,7 @@ public class StoryController {
 				model.addAttribute("tsscStory", story);
 				return "games/stories/add-story";
 			}
-			storyDelegate.POST_Story(story);			
+			storyDelegate.POST_Story(story, id);			
 		}
 		return "redirect:/frontapi/games/"+id+"/stories";
 	}

@@ -25,13 +25,6 @@ public class StoryDelegateImp implements StoryDelegate{
 	}
 	
 	@Override
-	public Iterable<TsscStory> GET_Stories() {
-		TsscStory[] tsscStories = restTemplate.getForObject(SERVER+"stories", TsscStory[].class);
-		List<TsscStory> lisStories = Arrays.asList(tsscStories);
-		return lisStories;
-	}
-	
-	@Override
 	public Iterable<TsscStory> GET_GameStories(long id) {
 		TsscStory[] tsscStories = restTemplate.getForObject(SERVER+"games/"+id+"/stories", TsscStory[].class);
 		List<TsscStory> lisStories = Arrays.asList(tsscStories);
@@ -40,12 +33,12 @@ public class StoryDelegateImp implements StoryDelegate{
 	
 	@Override
 	public void DELETE_StoryGame(long idG, long idS ) {
-		restTemplate.delete(SERVER+"games/"+idG+"/stories/"+idS);
+		restTemplate.delete(SERVER+"stories/"+idS);
 	}
 
 	@Override
-	public TsscStory POST_Story(TsscStory POSTStory) {
-		TsscStory tsscAdmin = restTemplate.postForObject(SERVER+"stories", POSTStory , TsscStory.class);
+	public TsscStory POST_Story(TsscStory POSTStory, long idG) {
+		TsscStory tsscAdmin = restTemplate.postForObject(SERVER+"games/"+idG+"/stories", POSTStory , TsscStory.class);
 		return tsscAdmin;
 	}
 

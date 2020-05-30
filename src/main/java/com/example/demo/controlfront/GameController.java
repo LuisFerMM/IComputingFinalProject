@@ -41,14 +41,14 @@ public class GameController {
 	}
 	
 	@PostMapping("/games/add")
-	public String saveGame(TsscGame game, @RequestParam(value = "action", required = true) String action, Model model) {			
+	public String saveGame(@Validated ({generalValidator.class}) TsscGame game, BindingResult bindingResult, @RequestParam(value = "action", required = true) String action, Model model) {			
 		if (!action.equals("Cancel")) {
+			if(bindingResult.hasErrors()) {
+				model.addAttribute("tsscGame", game);
+				model.addAttribute("topics", gameDelegate.GET_TopicsGame());
+				return "games/add-game";
+			}
 			gameDelegate.POST_Game(game);
-//			if(bindingResult.hasErrors()) {
-//				model.addAttribute("tsscGame", game);
-//				model.addAttribute("topics", gameDelegate.GET_TopicsGame());
-//				return "games/add-game";
-//			}
 		}
 		return "redirect:/frontapi/games/";
 	}
