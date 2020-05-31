@@ -2,6 +2,10 @@ package com.example.demo.modelo;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.List;
@@ -26,6 +30,7 @@ public class TsscTimecontrol implements Serializable {
 	@Column(name = "INTERVAL_RUNNING")
 	private BigDecimal intervalRunning;
 
+	@DateTimeFormat(iso = ISO.TIME)
 	@Column(name = "LAST_PLAY_TIME")
 	private LocalTime lastPlayTime;
 

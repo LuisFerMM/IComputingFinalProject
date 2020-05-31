@@ -12,4 +12,5 @@ public interface ITsscTimecontrolDao {
 	public void delete(TsscTimecontrol entity);
 	public List<TsscTimecontrol> findAll();
 	public TsscTimecontrol findById(Long codigo);
+	Iterable<TsscTimecontrol> findByGameId(long id);
 }

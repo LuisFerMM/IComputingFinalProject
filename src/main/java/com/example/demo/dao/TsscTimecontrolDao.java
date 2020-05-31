@@ -30,13 +30,11 @@ public class TsscTimecontrolDao implements ITsscTimecontrolDao{
 	@Override
 	public void update(TsscTimecontrol entity) {
 		entityManager.merge(entity);		
-		
 	}
 
 	@Override
 	public void delete(TsscTimecontrol entity) {
 		entityManager.remove(entity);		
-		
 	}
 
 	@Override
@@ -50,4 +48,9 @@ public class TsscTimecontrolDao implements ITsscTimecontrolDao{
 		return 	entityManager.createQuery(jpql).getResultList();	
 	}
 	
+	@Override
+	public Iterable<TsscTimecontrol> findByGameId(long id) {
+		String jpql = "Select a from TsscTimecontrol a where a.tsscGame.id = :id";
+		return 	entityManager.createQuery(jpql).setParameter("id", id).getResultList();
+	}
 }

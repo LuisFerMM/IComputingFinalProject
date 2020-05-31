@@ -29,7 +29,7 @@ public class TimelineController {
 	
 	@GetMapping("/games/{id}/timelines")
 	public String showStories(@PathVariable("id") long id, Model model) {
-		model.addAttribute("timelines", timeDelegate.GET_Time(id));
+		model.addAttribute("timelines", timeDelegate.GET_times(id));
 		model.addAttribute("game", gameDelegate.GET_Game(id));
 		return "games/timelines/index";
 	}
@@ -46,6 +46,7 @@ public class TimelineController {
 		if (!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("tsscTimecontrol", time);
+				model.addAttribute("gameId", id);
 				return "games/timelines/add-timeline";
 			}
 			timeDelegate.POST_Time(time, id);		

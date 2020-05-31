@@ -24,10 +24,10 @@ public class TimeControllerBack {
 	
 	@Autowired
 	private TimeControlServiceImp timeControllerService;
-
+	
 	@GetMapping("/games/{id}/timelines")
 	public Iterable<TsscTimecontrol> showStories(@PathVariable("id") long id) {
-		return timeControllerService.findAll();
+		return timeControllerService.findByGameId(id);
 	}
 	
 	@PostMapping("/games/{id}/timelines")
