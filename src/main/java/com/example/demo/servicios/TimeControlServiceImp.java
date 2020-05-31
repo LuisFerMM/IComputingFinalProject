@@ -30,7 +30,7 @@ public class TimeControlServiceImp  implements TimeControlService{
 		TsscGame g = gS.getGame(game);
 		g.addTsscTimecontrol(timeControl);
 		timeControlDao.save(timeControl);
-		return timeControl;
+		return timeControlDao.findById(timeControl.getId());
 	}
 
 	@Override

@@ -63,8 +63,9 @@ public class StoryServiceImp implements StoryService {
 	}
 
 	@Override
-	public void delete(TsscStory story) {
-		storyR.delete(story);
+	@Transactional
+	public void delete(long id) {
+		storyR.delete(storyR.findById(id));
 	}
 
 	@Override

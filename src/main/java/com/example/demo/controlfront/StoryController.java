@@ -30,19 +30,19 @@ public class StoryController {
 	@GetMapping("/games/{id}/stories")
 	public String showStories(@PathVariable("id") long id, Model model) {
 		model.addAttribute("stories", storyDelegate.GET_GameStories(id));
-		model.addAttribute("game", gameDelegate.GET_Game(id));
+		model.addAttribute("tsscGame", gameDelegate.GET_Game(id));
 		return "games/stories/index";
 	}
 	
 	@GetMapping("/games/{id}/stories/add")
 	public String addstoryPage(@PathVariable("id") long id, Model model) {
 		model.addAttribute("tsscStory", new TsscStory());
-		model.addAttribute("gameId", id);
+		model.addAttribute("tsscGame", gameDelegate.GET_Game(id));
 		return "games/stories/add-story";
 	}
 	
 	@PostMapping("/games/{id}/stories/add")
-	public String savestory(@Validated({generalValidator.class}) TsscStory story, BindingResult bindingResult, @RequestParam(value = "action", required = true) String action, @PathVariable("id") long id, Model model) {			
+	public String savestory(@Validated({generalValidator.class}) TsscStory story, BindingResult bindingResult, @PathVariable("id") long id, @RequestParam(value = "action", required = true) String action, Model model) {			
 		if (!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("tsscStory", story);
@@ -59,13 +59,14 @@ public class StoryController {
 		if (story == null)
 			throw new IllegalArgumentException("Invalid story Id:" + id);
 		model.addAttribute("tsscStory", story);
+		model.addAttribute("tsscGame", gameDelegate.GET_Game(idG));
 		return "games/stories/update-story";
 	}
 
 	@PostMapping("/games/{idG}/stories/edit")
 	public String updatestory(@Validated({generalValidator.class}) TsscStory story, BindingResult bindingResult, @PathVariable("idG") long idG,
 			@RequestParam(value = "action", required = true) String action, Model m) {
-		if (action != null && !action.equals("Cancel")) {
+		if(!action.equals("Cancel")) {
 		if(bindingResult.hasErrors()) {
 			m.addAttribute("tsscStory", story);
 			return "games/stories/update-story";

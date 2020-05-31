@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -12,8 +13,10 @@ import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
 import com.example.demo.modelo.TsscAdmin;
 import com.example.demo.modelo.TsscGame;
+import com.example.demo.modelo.TsscStory;
 import com.example.demo.servicios.AdminServiceImp;
 import com.example.demo.servicios.GameServiceImp;
+import com.example.demo.servicios.StoryServiceImp;
 
 @EntityScan("com.example.demo.modelo")
 @SpringBootApplication
@@ -47,6 +50,13 @@ public class Taller2Application {
 		game.setNSprints(20);
 		game.setNGroups(14);
 		gameS.createGame(game);
+		
+		StoryServiceImp sS = ctx.getBean(StoryServiceImp.class);
+		TsscStory story = new TsscStory();
+		story.setBusinessValue(BigDecimal.TEN);
+		story.setInitialSprint(BigDecimal.ONE);
+		story.setPriority(BigDecimal.TEN);
+		System.out.println(sS.createStory(story, game.getId()).getId());
 	}
 
 }

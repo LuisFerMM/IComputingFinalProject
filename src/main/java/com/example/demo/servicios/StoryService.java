@@ -10,5 +10,5 @@ public interface StoryService {
 	public TsscStory updateStory (TsscStory story);
 	public TsscStory getStory (Long id);
 	public Iterable<TsscStory> findAll();
-	void delete(TsscStory id);
+	void delete(long id);
 }

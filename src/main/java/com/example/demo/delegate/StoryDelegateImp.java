@@ -44,7 +44,7 @@ public class StoryDelegateImp implements StoryDelegate{
 
 	@Override
 	public void PUT_Story(TsscStory PUTStory) {
-		restTemplate.put(SERVER+"stories/"+PUTStory.getId(), PUTStory, TsscStory.class);		
+		restTemplate.put(SERVER+"stories", PUTStory, TsscStory.class);		
 	}
 
 	@Override
