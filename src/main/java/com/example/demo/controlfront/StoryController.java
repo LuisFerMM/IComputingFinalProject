@@ -34,23 +34,23 @@ public class StoryController {
 		return "games/stories/index";
 	}
 	
-	@GetMapping("/games/{id}/stories/add")
-	public String addstoryPage(@PathVariable("id") long id, Model model) {
+	@GetMapping("/games/{idG}/stories/add")
+	public String addstoryPage(@PathVariable("idG") long idG, Model model) {
 		model.addAttribute("tsscStory", new TsscStory());
-		model.addAttribute("tsscGame", gameDelegate.GET_Game(id));
+		model.addAttribute("tsscGame", gameDelegate.GET_Game(idG));
 		return "games/stories/add-story";
 	}
 	
-	@PostMapping("/games/{id}/stories/add")
-	public String savestory(@Validated({generalValidator.class}) TsscStory story, BindingResult bindingResult, @PathVariable("id") long id, @RequestParam(value = "action", required = true) String action, Model model) {			
+	@PostMapping("/games/{idG}/stories/add")
+	public String savestory(@Validated({generalValidator.class}) TsscStory story, BindingResult bindingResult, @PathVariable("idG") long idG, @RequestParam(value = "action", required = true) String action, Model model) {			
 		if (!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("tsscStory", story);
 				return "games/stories/add-story";
 			}
-			storyDelegate.POST_Story(story, id);			
+			storyDelegate.POST_Story(story, idG);			
 		}
-		return "redirect:/frontapi/games/"+id+"/stories";
+		return "redirect:/frontapi/games/"+idG+"/stories";
 	}
 	
 	@GetMapping("/games/{idG}/stories/edit/{id}")

@@ -28,9 +28,9 @@ public class StoryControllerBack {
 		return storyS.findByGameId(id);
 	}
 	
-	@PostMapping("/games/{id}/stories")
-	public ResponseEntity savestory(@RequestBody TsscStory story, @PathVariable("id") long id) {
-		return ResponseEntity.ok(storyS.createStory(story, id));
+	@PostMapping("/games/{idG}/stories")
+	public ResponseEntity savestory(@RequestBody TsscStory story, @PathVariable("idG") long idG) {
+		return ResponseEntity.ok(storyS.createStory(story, idG));
 	}
 	
 	@GetMapping("/stories/{id}")

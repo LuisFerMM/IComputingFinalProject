@@ -5,5 +5,6 @@
 		<class>com.example.demo.modelo.TsscTopic</class>
 		<class>com.example.demo.modelo.TsscStory</class>
 		<class>com.example.demo.modelo.TsscAdmin</class>
+		<class>com.example.demo.modelo.TsscTimecontrol</class>
 	</persistence-unit>
 </persistence>

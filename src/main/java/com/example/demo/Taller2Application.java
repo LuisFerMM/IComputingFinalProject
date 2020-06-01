@@ -14,9 +14,11 @@ import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import com.example.demo.modelo.TsscAdmin;
 import com.example.demo.modelo.TsscGame;
 import com.example.demo.modelo.TsscStory;
+import com.example.demo.modelo.TsscTimecontrol;
 import com.example.demo.servicios.AdminServiceImp;
 import com.example.demo.servicios.GameServiceImp;
 import com.example.demo.servicios.StoryServiceImp;
+import com.example.demo.servicios.TimeControlServiceImp;
 
 @EntityScan("com.example.demo.modelo")
 @SpringBootApplication
@@ -51,12 +53,21 @@ public class Taller2Application {
 		game.setNGroups(14);
 		gameS.createGame(game);
 		
+		
 		StoryServiceImp sS = ctx.getBean(StoryServiceImp.class);
 		TsscStory story = new TsscStory();
 		story.setBusinessValue(BigDecimal.TEN);
 		story.setInitialSprint(BigDecimal.ONE);
 		story.setPriority(BigDecimal.TEN);
+		story.setDescription("Story 1 - Descripción de la Story");
 		System.out.println(sS.createStory(story, game.getId()).getId());
+		
+		/*
+		TimeControlServiceImp tC = ctx.getBean(TimeControlServiceImp.class);
+		TsscTimecontrol time = new TsscTimecontrol();
+		time.setAutostart("20");
+		tC.createTimeControl(time, game.getId());
+		*/
 	}
 
 }

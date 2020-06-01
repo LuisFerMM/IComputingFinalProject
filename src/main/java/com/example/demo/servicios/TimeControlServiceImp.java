@@ -48,8 +48,8 @@ public class TimeControlServiceImp  implements TimeControlService{
 
 	@Override
 	@Transactional
-	public void deleteTimeControl(TsscTimecontrol tsscTimecontrol) {
-		timeControlDao.delete(tsscTimecontrol);
+	public void deleteTimeControl(long id) {
+		timeControlDao.delete(timeControlDao.findById(id));
 	}
 
 	public Iterable<TsscTimecontrol> findByGameId(long id) {

@@ -8,6 +8,6 @@ public interface TimeControlService {
 	public TsscTimecontrol createTimeControl (TsscTimecontrol timeControl, Long game);
 	public TsscTimecontrol updateTimeControl (TsscTimecontrol timeControl);
 	public TsscTimecontrol getTimeControl (Long id);
-	public void deleteTimeControl (TsscTimecontrol tsscTimecontrol);
+	public void deleteTimeControl (long id);
 	public Iterable<TsscTimecontrol> findAll();
 }

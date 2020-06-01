@@ -17,7 +17,7 @@
 		<div class="row">
 			<div class="col-md-5">
 				<form action="#" th:object="${tsscTimecontrol}"
-					th:action="@{/games/{id}/timelines/edit(id=${game.id})}"method="post">
+					th:action="@{/games/{id}/timelines/edit(id=${tsscGame.id})}"method="post">
 					<div class="row">
 					<div class="form-group col-md-6">
 							<label for="name" class="col-form-label">Nombre cronograma</label> 
@@ -74,10 +74,12 @@
 					</div>
 					<div class="row">
 						<div class="col-md-4 mt-3">
-							<input type="submit" name="action" class="btn btn-primary" value="Actualizar">
+							<input type="submit" name="action" class="btn btn-primary" 
+							value="Actualizar">
 						</div>
 						<div class="col-md-3 mt-3">
-							<input type="submit" name="action" class="btn btn-secondary" value="Cancelar">
+							<input type="submit" name="action" class="btn btn-secondary" 
+							value="Cancelar">
 						</div>
 					</div>
 				</form>
