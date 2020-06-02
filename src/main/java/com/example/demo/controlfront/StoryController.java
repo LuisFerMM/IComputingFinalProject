@@ -63,11 +63,26 @@ public class StoryController {
 		if (!action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("tsscStory", story);
+				model.addAttribute("tsscGame", gameDelegate.GET_Game(idG));
 				return "games/stories/add-story";
 			}
 			storyDelegate.POST_Story(story, idG);			
 		}
 		return "redirect:/frontapi/games/"+idG+"/stories";
+	}
+	
+	@PostMapping("/stories/add")
+	public String savestory(@Validated({generalValidator.class}) TsscStory story, BindingResult bindingResult, @RequestParam(value = "action", required = true) String action, Model model) {			
+		if (!action.equals("Cancel")) {
+			if(bindingResult.hasErrors()) {
+				model.addAttribute("tsscStory", story);
+				model.addAttribute("games", gameDelegate.GET_Games());
+				return "games/stories/add-story";
+			}
+			long idG = story.getTsscGame().getId();
+			storyDelegate.POST_Story(story, idG);			
+		}
+		return "redirect:/frontapi/stories";
 	}
 	
 	@GetMapping("/stories/edit/{id}")
