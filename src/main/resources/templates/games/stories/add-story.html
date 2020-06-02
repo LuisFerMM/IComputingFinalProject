@@ -16,7 +16,7 @@
 		<h2 class="mb-5">New Story</h2>
 		<div class="row">
 			<div class="col-md-6" th:switch="${tsscGame}">
-				    <form th:case="null" action="#" th:action="@{/frontapi/games/{idG}/stories/add(idG=*{tsscGame})}" th:object="${tsscStory}"
+				    <form th:case="null" action="#" th:action="@{/frontapi/stories/add}" th:object="${tsscStory}"
 					method="post">
 					<div class="row">
 						<div class="form-group col-md-6">
