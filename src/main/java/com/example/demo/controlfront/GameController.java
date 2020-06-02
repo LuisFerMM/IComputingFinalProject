@@ -36,7 +36,6 @@ public class GameController {
 	public String addGamePage(Model model) {
 		model.addAttribute("tsscGame", new TsscGame());
 		model.addAttribute("topics", gameDelegate.GET_TopicsGame());
-		model.addAttribute("tsscTopic", null);
 		return "games/add-game";
 	}
 	

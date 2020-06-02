@@ -24,7 +24,7 @@ public class AdminController {
 	
 	@PostMapping("/goBack")
 	public String goBack() {
-		return "redirect:/frontapi/games/";
+		return "redirect:/frontapi/";
 	}
 	
 	@GetMapping("/")

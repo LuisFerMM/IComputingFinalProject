@@ -19,9 +19,15 @@
 	<div th:switch="${stories}" class="container my-5">
 		<div class="row">
 			<div class="col-md-10">
-				<h2 th:case="null" th:text="${tsscGame.name}+' has no stories yet!'"></h2>
+			<div th:case="null" th:switch="${parent}">
+				<h2 th:case="null">There are no stories yet!</h2>
+				<h2 th:case="*" th:text="${parentName}+' has no stories yet!'"></h2>
+				</div>
 				<div th:case="*">
-					<h2 class="my-5" th:text="'Stories of '+${tsscGame.name}"></h2>
+				<div th:switch="${parent}">
+					<h2 th:case="null" class="my-5">Stories</h2>
+					<h2 th:case="*" class="my-5" th:text="'Stories of '+${parentName}"></h2>
+					</div>
 					<table class="table table-striped table-responsive-md">
 						<thead>
 							<tr>
@@ -39,21 +45,32 @@
 								<td class="text-info" th:text="${story.businessValue}"></td>
 								<td class="text-info" th:text="${story.initialSprint}"></td>
 								<td class="text-info" th:text="${story.Priority}"></td>
-								<td><a th:href="@{/frontapi/games/{idG}/stories/edit/{id}(idG=${tsscGame.id},id=${story.id})}"
+								<td th:switch="${parent}">
+								<a th:case="null" th:href="@{/frontapi/stories/edit/{id}(id=${story.id})}"
+									class="btn btn-primary"><i class="fas fa-edit ml-2"></i></a>
+									<a th:case="*" th:href="@{/frontapi/{parent}/{idG}/stories/edit/{id}(idG=${parentId},id=${story.id},parent=${parent})}"
 									class="btn btn-primary"><i class="fas fa-edit ml-2"></i></a></td>
-								<td><a th:href="@{/frontapi/games/{idG}/stories/del/{id}(id=${story.id},idG=${tsscGame.id})}"
+								<td th:switch="${parent}">
+									<a th:case="null" th:href="@{/frontapi/stories/del/{id}(id=${story.id})}"
+									class="btn btn-primary"><i class="fas fa-trash-alt ml-2"></i></a>
+									<a th:case="*" th:href="@{/frontapi/{parent}/{idG}/stories/del/{id}(id=${story.id},idG=${parentId},parent=${parent})}"
 									class="btn btn-primary"><i class="fas fa-trash-alt ml-2"></i></a></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-				<p class="my-5">
-					<a th:href="@{/frontapi/games/{id}/stories/add(id=${tsscGame.id})}" class="btn btn-primary"><i
+				<p class="my-5" th:switch="${parent}">
+					<a th:case="null" th:href="@{/frontapi/stories/add}" class="btn btn-primary"><i
+						class="fas fa-plus-circle ml-2"></i></a>
+					<a th:case="*" th:href="@{/frontapi/{parent}/{id}/stories/add(id=${parentId},parent=${parent})}" class="btn btn-primary"><i
 						class="fas fa-plus-circle ml-2"></i></a>
 				</p>
 			</div>
 		</div>
-		<a href="/frontapi/games/"><i class="fas fa-home ml-2"></i> Go back to Games</a>
+		<div th:switch="${parent}">
+		<a th:case="null" href="/frontapi/"><i class="fas fa-home ml-2"></i> Go back to Main</a>
+		<a th:case="*" href="/frontapi/games/"><i class="fas fa-home ml-2"></i> Go back to Games</a>
+		</div>
 	</div>
 </body>
 </html>

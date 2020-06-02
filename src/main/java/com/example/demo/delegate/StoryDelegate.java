@@ -15,11 +15,6 @@ public interface StoryDelegate {
 	public Iterable<TsscStory> GET_GameStories(long id);
 	
 	/*
-	 * Eliminar el story de un juego
-	 */
-	public void DELETE_StoryGame(long idG, long idS);
-	
-	/*
 	 * Update/Replace an Story
 	 */
 	public void PUT_Story(TsscStory PUTStory);
@@ -27,7 +22,11 @@ public interface StoryDelegate {
 	/*
 	 * Delete an Story 
 	 */
-	public void DELETE_Story(TsscStory DELETEStory);
+	void DELETE_Story(long id);
 
 	TsscStory POST_Story(TsscStory POSTStory, long idG);
+
+	
+
+	
 }

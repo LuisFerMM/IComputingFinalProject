@@ -17,8 +17,22 @@
 		<div class="row">
 			<div class="col-md-5">
 				<form action="#" th:object="${tsscTimecontrol}"
-					th:action="@{/games/{id}/timelines/edit(id=${tsscGame.id})}"method="post">
+					th:action="@{/frontapi/games/{idG}/timelines/edit(idG=${tsscGame.id})}"method="post">
 					<div class="row">
+					<div class="form-group col-md-6">
+							<label for="parentId" class="col-form-label">Id Game</label> <input
+								type="text" th:field="*{tsscGame.id}" class="form-control" id="idG"
+								placeholder="Id" readonly><span
+								th:if="${#fields.hasErrors('tsscGame')}" th:errors="*{idG}"
+								class="text-danger"></span>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="id" class="col-form-label">Id Timecontrol</label> <input
+								type="text" th:field="*{id}" class="form-control" id="id"
+								placeholder="Id" readonly><span
+								th:if="${#fields.hasErrors('id')}" th:errors="*{id}"
+								class="text-danger"></span>
+						</div>
 					<div class="form-group col-md-6">
 							<label for="name" class="col-form-label">Nombre cronograma</label> 
 							<br>

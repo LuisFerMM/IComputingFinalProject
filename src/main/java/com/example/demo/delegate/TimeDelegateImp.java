@@ -32,7 +32,7 @@ public class TimeDelegateImp implements TimeDelegate{
 
 	@Override
 	public void PUT_Time(TsscTimecontrol PUTTime) {
-		restTemplate.put(SERVER+"timelines/"+PUTTime.getId(), PUTTime, TsscTimecontrol.class);		
+		restTemplate.put(SERVER+"timelines", PUTTime, TsscTimecontrol.class);		
 		
 	}
 

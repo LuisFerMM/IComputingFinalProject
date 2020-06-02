@@ -24,8 +24,13 @@ public class StoryControllerBack {
 	private StoryServiceImp storyS;
 	
 	@GetMapping("/games/{id}/stories")
-	public Iterable<TsscStory> showStories(@PathVariable("id") long id) {
+	public Iterable<TsscStory> showGameStories(@PathVariable("id") long id) {
 		return storyS.findByGameId(id);
+	}
+	
+	@GetMapping("/stories")
+	public Iterable<TsscStory> showStories() {
+		return storyS.findAll();
 	}
 	
 	@PostMapping("/games/{idG}/stories")
@@ -41,6 +46,11 @@ public class StoryControllerBack {
 	@PutMapping("/stories")
 	public void updatestory(@RequestBody TsscStory story) {
 		ResponseEntity.ok(storyS.updateStory(story));
+	}
+	
+	@DeleteMapping("/games/{idG}/stories/{id}")
+	public void deletestoryGame(@PathVariable("id") long id, @PathVariable("idG") long idG) {
+		storyS.delete(id);
 	}
 	
 	@DeleteMapping("/stories/{id}")

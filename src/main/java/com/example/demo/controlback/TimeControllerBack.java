@@ -40,7 +40,8 @@ public class TimeControllerBack {
 
 	@PutMapping("/timelines")
 	public void updateTime(@RequestBody TsscTimecontrol tsscTimecontrol) {
-		ResponseEntity.ok(timeControllerService.updateTimeControl(tsscTimecontrol));
+		System.out.println("entra a actualizar");
+		timeControllerService.updateTimeControl(tsscTimecontrol);
 	}
 	
 	@DeleteMapping("/timelines/{id}")

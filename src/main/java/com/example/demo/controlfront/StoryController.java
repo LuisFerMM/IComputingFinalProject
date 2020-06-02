@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.delegate.GameDelegateImp;
 import com.example.demo.delegate.StoryDelegateImp;
+import com.example.demo.modelo.TsscGame;
 import com.example.demo.modelo.TsscGame.generalValidator;
 import com.example.demo.modelo.TsscStory;
 
@@ -28,9 +29,18 @@ public class StoryController {
 	private GameDelegateImp gameDelegate;
 	
 	@GetMapping("/games/{id}/stories")
-	public String showStories(@PathVariable("id") long id, Model model) {
+	public String showGameStories(@PathVariable("id") long id, Model model) {
 		model.addAttribute("stories", storyDelegate.GET_GameStories(id));
-		model.addAttribute("tsscGame", gameDelegate.GET_Game(id));
+		TsscGame game = gameDelegate.GET_Game(id);
+		model.addAttribute("parentName", game.getName());
+		model.addAttribute("parent", "games");
+		model.addAttribute("parentId", id);
+		return "games/stories/index";
+	}
+	
+	@GetMapping("/stories")
+	public String showStories(Model model) {
+		model.addAttribute("stories", storyDelegate.GET_Stories());
 		return "games/stories/index";
 	}
 	
@@ -38,6 +48,13 @@ public class StoryController {
 	public String addstoryPage(@PathVariable("idG") long idG, Model model) {
 		model.addAttribute("tsscStory", new TsscStory());
 		model.addAttribute("tsscGame", gameDelegate.GET_Game(idG));
+		return "games/stories/add-story";
+	}
+	
+	@GetMapping("/stories/add")
+	public String addstoryPage(Model model) {
+		model.addAttribute("tsscStory", new TsscStory());
+		model.addAttribute("games", gameDelegate.GET_Games());
 		return "games/stories/add-story";
 	}
 	
@@ -53,13 +70,36 @@ public class StoryController {
 		return "redirect:/frontapi/games/"+idG+"/stories";
 	}
 	
-	@GetMapping("/games/{idG}/stories/edit/{id}")
-	public String showUpdateForm(@PathVariable("id") long id, @PathVariable("idG") long idG, Model model) {
+	@GetMapping("/stories/edit/{id}")
+	public String showUpdateForm(@PathVariable("id") long id, Model model) {
 		TsscStory story = storyDelegate.GET_Story(id);
 		if (story == null)
 			throw new IllegalArgumentException("Invalid story Id:" + id);
 		model.addAttribute("tsscStory", story);
-		model.addAttribute("tsscGame", gameDelegate.GET_Game(idG));
+		return "games/stories/update-story";
+	}
+	
+	@PostMapping("/stories/edit")
+	public String updatestory(@Validated({generalValidator.class}) TsscStory story, BindingResult bindingResult,
+			@RequestParam(value = "action", required = true) String action, Model m) {
+		if(!action.equals("Cancel")) {
+		if(bindingResult.hasErrors()) {
+			m.addAttribute("tsscStory", story);
+			return "games/stories/update-story";
+		}
+			storyDelegate.PUT_Story(story);
+		}
+		return "redirect:/frontapi/stories";
+	}
+	
+	@GetMapping("/games/{idG}/stories/edit/{id}")
+	public String showUpdateFormGame(@PathVariable("id") long id, @PathVariable("idG") long idG, Model model) {
+		TsscStory story = storyDelegate.GET_Story(id);
+		if (story == null)
+			throw new IllegalArgumentException("Invalid story Id:" + id);
+		model.addAttribute("tsscStory", story);
+		model.addAttribute("parentId", gameDelegate.GET_Game(idG).getId());
+		model.addAttribute("parent", "games");
 		return "games/stories/update-story";
 	}
 
@@ -77,8 +117,14 @@ public class StoryController {
 	}
 	
 	@GetMapping("/games/{idG}/stories/del/{id}")
-	public String deletestory(@PathVariable("id") long id, @PathVariable("idG") long idG) {
-		storyDelegate.DELETE_StoryGame(idG, id);
+	public String deletestoryGame(@PathVariable("id") long id, @PathVariable("idG") long idG) {
+		storyDelegate.DELETE_Story(id);
 		return "redirect:/frontapi/games/"+idG+"/stories";
+	}
+	
+	@GetMapping("/stories/del/{id}")
+	public String deletestoryGame(@PathVariable("id") long id) {
+		storyDelegate.DELETE_Story(id);
+		return "redirect:/frontapi/stories";
 	}
 }

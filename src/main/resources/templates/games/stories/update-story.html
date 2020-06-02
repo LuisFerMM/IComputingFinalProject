@@ -15,16 +15,70 @@
 	<div class="container my-5">
 		<h2 class="mb-5">Update Story</h2>
 		<div class="row">
-			<div class="col-md-5">
-				<form action="#" th:object="${tsscStory}"
-					th:action="@{/frontapi/games/{id}/stories/edit(id=${tsscGame.id})}"
+			<div th:switch="${parent}" class="col-md-5">
+			<form th:case="null" action="#" th:object="${tsscStory}"
+					th:action="@{/frontapi/stories/edit}"
 					method="post">
 					<div class="row">
 						<div class="form-group col-md-6">
-							<label for="id" class="col-form-label">Id Game</label> <input
-								type="text" th:field="*{tsscGame}" class="form-control" id="id"
+							<label for="id" class="col-form-label">Id Story</label> <input
+								type="text" th:field="*{id}" class="form-control" id="id"
 								placeholder="Id" readonly><span
-								th:if="${#fields.hasErrors('tsscGame')}" th:errors="*{id}"
+								th:if="${#fields.hasErrors('id')}" th:errors="*{id}"
+								class="text-danger"></span>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="name" class="col-form-label">Description</label> <input
+								type="text" th:field="*{description}" class="form-control"
+								id="description" placeholder="Description"> <span
+								th:if="${#fields.hasErrors('description')}"
+								th:errors="*{description}" class="text-danger"></span>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="defaultGroups" class="col-form-label">Business
+								Value</label> <input type="text" th:field="*{businessValue}"
+								class="form-control" id="businessValue"
+								placeholder="Business Value"> <span
+								th:if="${#fields.hasErrors('businessValue')}"
+								th:errors="*{businessValue}" class="text-danger"></span>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="defaultSprints" class="col-form-label">Initial
+								Sprint</label> <input type="text" th:field="*{initialSprint}"
+								class="form-control" id="initialSprint"
+								placeholder="Initial Sprint"> <span
+								th:if="${#fields.hasErrors('initialSprint')}"
+								th:errors="*{initialSprint}" class="text-danger"></span>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="mGroups" class="col-form-label">Priority</label> <input
+								type="text" th:field="*{priority}" class="form-control"
+								id="priority" placeholder="Priority"> <span
+								th:if="${#fields.hasErrors('priority')}" th:errors="*{priority}"
+								class="text-danger"></span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4 mt-3">
+							<input type="submit" name="action" class="btn btn-primary"
+								value="Update Story">
+						</div>
+						<div class="col-md-3 mt-3">
+							<input type="submit" name="action" class="btn btn-secondary"
+								value="Cancel">
+						</div>
+					</div>
+				</form>
+				
+				<form th:case="*" action="#" th:object="${tsscStory}"
+					th:action="@{/frontapi/{parent}/{pId}/stories/edit(pId=${parentId},parent=${parent})}"
+					method="post">
+					<div class="row">
+					<div class="form-group col-md-6">
+							<label for="parentId" class="col-form-label">Id Game</label> <input
+								type="text" th:field="*{tsscGame.id}" class="form-control" id="idG"
+								placeholder="Id" readonly><span
+								th:if="${#fields.hasErrors('tsscGame')}" th:errors="*{idG}"
 								class="text-danger"></span>
 						</div>
 						<div class="form-group col-md-6">

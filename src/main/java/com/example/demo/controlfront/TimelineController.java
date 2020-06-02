@@ -58,7 +58,7 @@ public class TimelineController {
 	public String showUpdateForm(@PathVariable("id") long id, @PathVariable("idG") long idG, Model model) {
 		TsscTimecontrol time = timeDelegate.GET_Time(id);
 		if (time == null)
-			throw new IllegalArgumentException("Invalid story Id:" + id);
+			throw new IllegalArgumentException("Invalid timeline Id:" + id);
 		model.addAttribute("tsscTimecontrol", time);
 		model.addAttribute("tsscGame", gameDelegate.GET_Game(idG));
 		return "games/timelines/update-timeline";
